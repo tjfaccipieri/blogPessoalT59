@@ -3,12 +3,16 @@ import logo from './logo.svg';
 import './App.css';
 
 function App() {
+
+  let nome = 'Thiago';
+  let idade = 36;
+
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
-          Edit <code>src/App.tsx</code> and save to reload.
+          Oi... meu nome é {nome}
         </p>
         <a
           className="App-link"
