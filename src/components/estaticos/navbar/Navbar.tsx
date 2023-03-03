@@ -15,8 +15,9 @@ function Navbar() {
             </Typography>
           </Box>
 
-          <Box display="flex" justifyContent="start" className='navbarLink'>
-            <Box mx={1} style={{ cursor: 'pointer' }}>
+          <Box display="flex" width='100%' justifyContent="space-between" className='navbarLink'>
+            <Box display='flex'>
+              <Box mx={1} style={{ cursor: 'pointer' }}>
               <Link to='/home'>
               <Typography variant="h6" color="inherit">
                 home
@@ -38,14 +39,13 @@ function Navbar() {
                 cadastrar tema
               </Typography>
             </Box>
+            </Box>
             <Box mx={1} style={{ cursor: 'pointer' }}>
               <Link to='/login'>
                 <Typography variant="h6" color="inherit">
                   logout
                 </Typography>
-              
               </Link>
-             
             </Box>
           </Box>
         </Toolbar>
