@@ -11,6 +11,7 @@ import { login } from '../../services/Service';
 function Login() {
   let navigate = useNavigate()
   const [token, setToken] = useLocalStorage('token')
+
   const [userLogin, setUserLogin] = useState<UsuarioLogin>({
     id: 0,
     nome: '',
@@ -31,7 +32,7 @@ function Login() {
   async function onSubmit(e: ChangeEvent<HTMLFormElement>) {
     e.preventDefault()
     try{
-      await login('/usuarios/logar', userLogin, setToken)
+      await login(`/usuarios/logar`, userLogin, setToken)
       alert('Usuário logado com sucesso')
     } catch(error) {
       alert('Usuário e/ou senha inválidos')
@@ -39,7 +40,7 @@ function Login() {
   }
 
   useEffect(() => {
-    if(token !== '') {
+    if(token !== ''){
       navigate('/home')
     }
   }, [token])

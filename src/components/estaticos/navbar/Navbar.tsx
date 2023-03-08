@@ -25,14 +25,18 @@ function Navbar() {
               </Link>
             </Box>
             <Box mx={1} style={{ cursor: 'pointer' }}>
+              <Link to='/postagens'>
               <Typography variant="h6" color="inherit">
                 postagens
               </Typography>
+              </Link>
             </Box>
             <Box mx={1} style={{ cursor: 'pointer' }}>
+              <Link to='/temas'>
               <Typography variant="h6" color="inherit">
                 temas
               </Typography>
+              </Link>
             </Box>
             <Box mx={1} style={{ cursor: 'pointer' }}>
               <Typography variant="h6" color="inherit">

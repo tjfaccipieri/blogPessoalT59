@@ -11,6 +11,7 @@ import './CadastroUsuario.css'
 function CadastroUsuario() {
 
   let navigate = useNavigate()
+  
   const [user, setUser] = useState<Usuario>({
     id: 0,
     nome: '',
@@ -18,6 +19,7 @@ function CadastroUsuario() {
     foto: '',
     senha: ''
   })
+
   const [userResult, setUserResult] = useState<Usuario>({
     id: 0,
     nome: '',
@@ -40,8 +42,8 @@ function CadastroUsuario() {
   }
 
   async function onSumit(event: ChangeEvent<HTMLFormElement>) {
+    event.preventDefault()
     try {
-      event.preventDefault()
       if(user.senha === confirmarSenha) {
         await cadastro('/usuarios/cadastrar', user, setUserResult);
         alert('Usuario cadastrado com sucesso')
