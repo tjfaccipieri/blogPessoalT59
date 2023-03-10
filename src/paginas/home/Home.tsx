@@ -3,6 +3,7 @@ import { Box } from '@mui/material';
 import React from 'react';
 import './Home.css';
 import TabPostagens from '../../components/postagens/tabPostagens/TabPostagens';
+import ModalPostagem from '../../components/postagens/modalPostagem/ModalPostagem';
 
 function Home() {
   return (
@@ -38,7 +39,9 @@ function Home() {
           </Typography>
         </Box>
         <Box display="flex" justifyContent="center">
-          <Box marginRight={1}></Box>
+          <Box marginRight={1}>
+            <ModalPostagem />
+          </Box>
           <Button
             variant="outlined"
             style={{

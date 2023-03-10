@@ -1,49 +1,59 @@
-import { Box, Button, Card, CardActions, CardContent, Typography } from '@mui/material';
-import React, { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
-import useLocalStorage from 'react-use-localstorage'
-import Tema from '../../../models/Tema'
+import {
+  Box,
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  Typography,
+} from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useNavigate, useParams } from 'react-router-dom';
+import useLocalStorage from 'react-use-localstorage';
+import Tema from '../../../models/Tema';
 import { buscaId, deleteId } from '../../../services/Service';
+import { TokenState } from '../../../store/tokens/tokensReducer';
 
 function DeletarTema() {
-
-  let navigate = useNavigate()
-  const {id} = useParams<{id: string}>()
-  const [token, setToken] = useLocalStorage('token')
-  const [tema, setTema] = useState<Tema>()
+  let navigate = useNavigate();
+  const { id } = useParams<{ id: string }>();
+  const token = useSelector<TokenState, TokenState['token']>(
+    (state) => state.token
+  );
+  const [tema, setTema] = useState<Tema>();
 
   useEffect(() => {
-    if(token === '') {
-      navigate('/login')
+    if (token === '') {
+      navigate('/login');
     }
-  }, [token])
+  }, [token]);
 
   async function findById(id: string) {
     await buscaId(`/temas/${id}`, setTema, {
       headers: {
-        Authorization: token
-      }
-    })
+        Authorization: token,
+      },
+    });
   }
 
   useEffect(() => {
-    if(id !== undefined) {
-      findById(id)
+    if (id !== undefined) {
+      findById(id);
     }
-  }, [id])
+  }, [id]);
 
   function sim() {
-    navigate('/temas')
+    navigate('/temas');
     deleteId(`/temas/${id}`, {
       headers: {
-        Authorization: token
-      }
-    })
-    alert('Tema apagado com sucesso')
+        Authorization: token,
+      },
+    });
+    alert('Tema apagado com sucesso');
   }
 
   function nao() {
-    navigate('/temas')
+    navigate('/temas');
   }
 
   return (
@@ -55,20 +65,28 @@ function DeletarTema() {
               <Typography color="textSecondary" gutterBottom>
                 Deseja deletar o Tema:
               </Typography>
-              <Typography color="textSecondary">
-                {tema?.descricao}
-              </Typography>
+              <Typography color="textSecondary">{tema?.descricao}</Typography>
             </Box>
           </CardContent>
           <CardActions>
-            <Box display="flex" justifyContent="start" ml={1.0} mb={2} >
+            <Box display="flex" justifyContent="start" ml={1.0} mb={2}>
               <Box mx={2}>
-                <Button onClick={sim} variant="contained" size='large' color="primary">
+                <Button
+                  onClick={sim}
+                  variant="contained"
+                  size="large"
+                  color="primary"
+                >
                   Sim
                 </Button>
               </Box>
               <Box mx={2}>
-                <Button  onClick={nao} variant="contained" size='large' color="secondary">
+                <Button
+                  onClick={nao}
+                  variant="contained"
+                  size="large"
+                  color="secondary"
+                >
                   Não
                 </Button>
               </Box>
@@ -77,7 +95,7 @@ function DeletarTema() {
         </Card>
       </Box>
     </>
-  )
+  );
 }
 
-export default DeletarTema
+export default DeletarTema;

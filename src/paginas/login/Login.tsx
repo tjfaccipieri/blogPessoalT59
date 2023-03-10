@@ -2,15 +2,19 @@ import { Button, Grid, Typography } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField';
 import { Box } from '@mui/material';
 import React, {ChangeEvent, useEffect, useState} from 'react';
+import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import useLocalStorage from 'react-use-localstorage';
 import UsuarioLogin from '../../models/UsuarioLogin';
 import { login } from '../../services/Service';
+import { addToken } from '../../store/tokens/action';
 
 
 function Login() {
   let navigate = useNavigate()
-  const [token, setToken] = useLocalStorage('token')
+  const [token, setToken] = useState('')
+  const dispatch = useDispatch()
 
   const [userLogin, setUserLogin] = useState<UsuarioLogin>({
     id: 0,
@@ -33,14 +37,27 @@ function Login() {
     e.preventDefault()
     try{
       await login(`/usuarios/logar`, userLogin, setToken)
-      alert('Usuário logado com sucesso')
+      toast.success('🎉Usuário logado com sucesso', {
+        
+        theme: "colored",
+        });
     } catch(error) {
-      alert('Usuário e/ou senha inválidos')
+      toast.warning('🎃Usuário e/ou senha inválidos',{
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        })
     }
   }
 
   useEffect(() => {
     if(token !== ''){
+      dispatch(addToken(token))
       navigate('/home')
     }
   }, [token])

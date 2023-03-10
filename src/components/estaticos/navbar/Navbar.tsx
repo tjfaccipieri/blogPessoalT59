@@ -1,12 +1,31 @@
 import React from 'react';
 import { AppBar, Toolbar, Typography } from '@material-ui/core';
 import { Box } from '@mui/material';
-import { Link } from 'react-router-dom';
-import './Navbar.css'
+import { Link, useNavigate } from 'react-router-dom';
+import './Navbar.css';
+import useLocalStorage from 'react-use-localstorage';
+import { useDispatch, useSelector } from 'react-redux';
+import { TokenState } from '../../../store/tokens/tokensReducer';
+import { addToken } from '../../../store/tokens/action';
 
 function Navbar() {
-  return (
-    <>
+  let dispatch = useDispatch()
+  const token = useSelector<TokenState, TokenState['token']>(
+    (state) => state.token
+  );
+  let navigate = useNavigate();
+
+  function goLogout() {
+    dispatch(addToken(''))
+    alert('Usuário deslogado');
+    navigate('/login');
+  }
+
+
+  let navbarComponent
+
+  if(token !== '') {
+    navbarComponent = (
       <AppBar position="static">
         <Toolbar variant="dense">
           <Box style={{ cursor: 'pointer' }}>
@@ -15,45 +34,56 @@ function Navbar() {
             </Typography>
           </Box>
 
-          <Box display="flex" width='100%' justifyContent="space-between" className='navbarLink'>
-            <Box display='flex'>
+          <Box
+            display="flex"
+            width="100%"
+            justifyContent="space-between"
+            className="navbarLink"
+          >
+            <Box display="flex">
               <Box mx={1} style={{ cursor: 'pointer' }}>
-              <Link to='/home'>
+                <Link to="/home">
+                  <Typography variant="h6" color="inherit">
+                    home
+                  </Typography>
+                </Link>
+              </Box>
+              <Box mx={1} style={{ cursor: 'pointer' }}>
+                <Link to="/postagens">
+                  <Typography variant="h6" color="inherit">
+                    postagens
+                  </Typography>
+                </Link>
+              </Box>
+              <Box mx={1} style={{ cursor: 'pointer' }}>
+                <Link to="/temas">
+                  <Typography variant="h6" color="inherit">
+                    temas
+                  </Typography>
+                </Link>
+              </Box>
+              <Box mx={1} style={{ cursor: 'pointer' }}>
+                <Link to="/cadastrarTema">
+                  <Typography variant="h6" color="inherit">
+                    cadastrar tema
+                  </Typography>
+                </Link>
+              </Box>
+            </Box>
+            <Box mx={1} style={{ cursor: 'pointer' }} onClick={goLogout}>
               <Typography variant="h6" color="inherit">
-                home
+                logout
               </Typography>
-              </Link>
-            </Box>
-            <Box mx={1} style={{ cursor: 'pointer' }}>
-              <Link to='/postagens'>
-              <Typography variant="h6" color="inherit">
-                postagens
-              </Typography>
-              </Link>
-            </Box>
-            <Box mx={1} style={{ cursor: 'pointer' }}>
-              <Link to='/temas'>
-              <Typography variant="h6" color="inherit">
-                temas
-              </Typography>
-              </Link>
-            </Box>
-            <Box mx={1} style={{ cursor: 'pointer' }}>
-              <Typography variant="h6" color="inherit">
-                cadastrar tema
-              </Typography>
-            </Box>
-            </Box>
-            <Box mx={1} style={{ cursor: 'pointer' }}>
-              <Link to='/login'>
-                <Typography variant="h6" color="inherit">
-                  logout
-                </Typography>
-              </Link>
             </Box>
           </Box>
         </Toolbar>
       </AppBar>
+    )
+  }
+
+  return (
+    <>
+      {navbarComponent}
     </>
   );
 }
