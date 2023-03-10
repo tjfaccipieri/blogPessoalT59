@@ -7,6 +7,7 @@ import useLocalStorage from 'react-use-localstorage';
 import { useDispatch, useSelector } from 'react-redux';
 import { TokenState } from '../../../store/tokens/tokensReducer';
 import { addToken } from '../../../store/tokens/action';
+import { toast } from 'react-toastify';
 
 function Navbar() {
   let dispatch = useDispatch()
@@ -17,7 +18,16 @@ function Navbar() {
 
   function goLogout() {
     dispatch(addToken(''))
-    alert('Usuário deslogado');
+    toast.info('Usuário deslogado',{
+      position: "top-center",
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+      });
     navigate('/login');
   }
 

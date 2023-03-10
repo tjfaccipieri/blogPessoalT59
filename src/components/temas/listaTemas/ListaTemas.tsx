@@ -14,6 +14,7 @@ import {
 } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { TokenState } from '../../../store/tokens/tokensReducer';
+import { toast } from 'react-toastify';
 
 function ListaTemas() {
   const [temas, setTemas] = useState<Tema[]>([]);
@@ -24,7 +25,16 @@ function ListaTemas() {
 
   useEffect(() => {
     if (token === '') {
-      alert('Você precisa estar logado pra ficar aqui.');
+      toast.error('Você precisa estar logado pra ficar aqui.',{
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        });
       navigate('/login');
     }
   }, [token]);

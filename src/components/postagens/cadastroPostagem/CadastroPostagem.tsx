@@ -41,7 +41,16 @@ function CadastroPostagem() {
 
   useEffect(() => {
     if (token === '') {
-      alert('Você precisa estar logado');
+      toast.error('Você precisa estar logado',{
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        });
       navigate('/login');
     }
   }, [token]);
@@ -104,7 +113,16 @@ function CadastroPostagem() {
           
           });
       } catch (error) {
-        alert('Erro ao atualizar a postagem');
+        toast.error('Erro ao atualizar a postagem',{
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        });
       }
     } else {
       try {
@@ -113,9 +131,27 @@ function CadastroPostagem() {
             Authorization: token,
           },
         });
-        alert('Postagem cadastrada com sucesso');
+        toast.success('Postagem cadastrada com sucesso', {
+          position: "top-center",
+          autoClose: 2000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "colored",
+          });
       } catch (error) {
-        alert('Erro ao cadastrar a postagem');
+        toast.error('Erro ao cadastrar a postagem',{
+        position: "top-center",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "colored",
+        });
       }
     }
     back();
