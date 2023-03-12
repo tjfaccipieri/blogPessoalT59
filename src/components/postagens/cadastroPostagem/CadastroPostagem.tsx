@@ -18,6 +18,7 @@ import Postagem from '../../../models/Postagem';
 import Tema from '../../../models/Tema';
 import { busca, buscaId, post, put } from '../../../services/Service';
 import { TokenState } from '../../../store/tokens/tokensReducer';
+import Usuario from '../../../models/Usuario';
 
 function CadastroPostagem() {
   let navigate = useNavigate();
@@ -25,12 +26,16 @@ function CadastroPostagem() {
   const token = useSelector<TokenState, TokenState['token']>(
     (state) => state.token
   );
+  const userId = useSelector<TokenState, TokenState['id']>(
+    (state) => state.id
+  );
   const [postagem, setPostagem] = useState<Postagem>({
     id: 0,
     titulo: '',
     texto: '',
     data: '',
     tema: null,
+    usuario: null
   });
 
   const [temas, setTemas] = useState<Tema[]>([]);
@@ -38,6 +43,14 @@ function CadastroPostagem() {
     id: 0,
     descricao: '',
   });
+
+  const [usuario, setUsuario] = useState<Usuario>({
+    id: +userId,
+    nome: '',
+    usuario: '',
+    senha: '',
+    foto: ''
+  })
 
   useEffect(() => {
     if (token === '') {
@@ -89,6 +102,7 @@ function CadastroPostagem() {
     setPostagem({
       ...postagem,
       tema: tema,
+      usuario: usuario
     });
   }, [tema]);
 

@@ -5,10 +5,10 @@ import React, {ChangeEvent, useEffect, useState} from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import useLocalStorage from 'react-use-localstorage';
 import UsuarioLogin from '../../models/UsuarioLogin';
 import { login } from '../../services/Service';
-import { addToken } from '../../store/tokens/action';
+import { addId, addToken } from '../../store/tokens/action';
+import './Login.css'
 
 
 function Login() {
@@ -16,7 +16,18 @@ function Login() {
   const [token, setToken] = useState('')
   const dispatch = useDispatch()
 
+  const [isLoading, setIsLoading] = useState(false)
+
   const [userLogin, setUserLogin] = useState<UsuarioLogin>({
+    id: 0,
+    nome: '',
+    usuario: '',
+    senha: '',
+    foto: '',
+    token: ''
+  })
+
+  const [respUserLogin, setRespUserLogin] = useState<UsuarioLogin>({
     id: 0,
     nome: '',
     usuario: '',
@@ -36,7 +47,8 @@ function Login() {
   async function onSubmit(e: ChangeEvent<HTMLFormElement>) {
     e.preventDefault()
     try{
-      await login(`/usuarios/logar`, userLogin, setToken)
+      setIsLoading(true)
+      await login(`/usuarios/logar`, userLogin, setRespUserLogin)
       toast.success('Usuário logado com sucesso', {
         position: "top-center",
         autoClose: 2000,
@@ -48,6 +60,7 @@ function Login() {
         theme: "colored",
         });
     } catch(error) {
+      setIsLoading(false)
       toast.warning('Usuário e/ou senha inválidos',{
         position: "top-center",
         autoClose: 2000,
@@ -68,6 +81,14 @@ function Login() {
     }
   }, [token])
 
+  useEffect(() => {
+    if(respUserLogin.token !== '') {
+      dispatch(addToken(respUserLogin.token))
+      dispatch(addId(respUserLogin.id.toString()))
+      navigate('/home')
+    }
+  }, [respUserLogin.token])
+
   return (
     <Grid container direction="row" justifyContent="center" alignItems="center">
       <Grid alignItems="center" xs={6}>
@@ -84,6 +105,7 @@ function Login() {
               variant="outlined"
               name="usuario"
               margin="normal"
+              className="inputLogin"
               fullWidth />
             <TextField
               value={userLogin.senha}
@@ -94,11 +116,12 @@ function Login() {
               name="senha"
               margin="normal"
               type="password"
+              className="inputLogin"
               fullWidth />
             <Box marginTop={2} textAlign="center">
               
                 <Button type="submit" variant="contained" color="primary">
-                  Logar
+                  {isLoading ? 'Aguarde' : 'Logar'}
                 </Button>
               
             </Box>

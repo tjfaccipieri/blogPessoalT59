@@ -1,0 +1,14 @@
+
+.inputLogin .MuiOutlinedInput-notchedOutline {
+  border-color: #8b256d;
+  border-width: 3px;
+}
+
+.inputLogin .MuiFormLabel-root, .inputLogin .MuiFocused {
+  color: #b10ab1 
+}
+
+.inputLogin .MuiOutlinedInput-input {
+  background-color: rgb(143, 236, 205);
+  color: rgb(209, 19, 19)
+}
