@@ -1,0 +1,10 @@
+.banner {
+  background-color: #303F9F;
+  color: #ffffff;
+}
+
+.botao1 {
+  background-color: #ffffff !important;
+  color: var(--azul) !important;
+  margin-right: 16px !important;
+}
